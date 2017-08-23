@@ -1,0 +1,75 @@
+{
+  "name": "spotify-radio-playlists",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src",
+    "build": "babel src -d dist",
+    "clean": "rm -rf dist",
+    "dev": "babel-watch src/index.js --debug 5858",
+    "docker-build": "npm run build && docker build -t registry.server.unsou.de/spotify-radio-playlists:latest .",
+    "docker-push": "docker push registry.server.unsou.de/spotify-radio-playlists:latest",
+    "release": "npm run clean && npm run docker-build && npm run docker-push",
+    "deploy": "npm run release && ssh pirate@10.13.37.11 'docker pull registry.server.unsou.de/spotify-radio-playlists:latest && docker rm -f spotify-radio-playlists && docker run -d --restart unless-stopped --name spotify-radio-playlists registry.server.unsou.de/spotify-radio-playlists:latest'",
+    "start": "NODE_ENV=production node dist/index.js"
+  },
+  "author": "Max Nowack <max@unsou.de>",
+  "license": "UNLICENSED",
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base"
+    ],
+    "parser": "babel-eslint",
+    "rules": {
+      "semi": 0,
+      "no-console": 0,
+      "no-param-reassign": [
+        2,
+        {
+          "props": false
+        }
+      ]
+    }
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ],
+    "plugins": [
+      "transform-class-properties",
+      [
+        "transform-runtime",
+        {
+          "polyfill": false,
+          "regenerator": true
+        }
+      ],
+      "transform-async-to-generator"
+    ]
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-runtime": "6.25.0",
+    "dotenv": "^4.0.0",
+    "moment": "^2.18.1",
+    "node-fetch": "^1.7.1",
+    "p-map": "^1.1.1",
+    "spotify-web-api-node": "^2.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-eslint": "7.2.3",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-0": "6.24.1",
+    "babel-watch": "2.0.7",
+    "eslint": "4.3.0",
+    "eslint-config-airbnb-base": "11.3.1",
+    "eslint-plugin-babel": "4.1.2",
+    "eslint-plugin-import": "2.7.0"
+  }
+}
