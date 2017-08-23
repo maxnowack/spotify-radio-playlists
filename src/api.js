@@ -1,5 +1,8 @@
 import moment from 'moment'
+import dotenv from 'dotenv'
 import SpotifyWebApi from 'spotify-web-api-node'
+
+dotenv.config()
 
 const credentials = {
   redirectUri: process.env.REDIRECT_URI,

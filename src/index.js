@@ -1,12 +1,9 @@
 import 'babel-polyfill'
-import dotenv from 'dotenv'
 import pMap from 'p-map'
 import playlists from './playlists'
 import getTracksInPlaylist from './getTracksInPlaylist'
 import saveTracks from './saveTracks'
 import { refreshToken } from './api'
-
-dotenv.config()
 
 async function start() {
   const fetchPlaylists = async () => {
