@@ -6,6 +6,7 @@ const clear = str => str
   .replace(/ft\. /gi, '')
   .replace(/& /gi, '')
   .replace(/&amp; /gi, '')
+  .replace(/\(PI\) /gi, '')
 
 export default [{
   playlistId: '6gHJB62EMpfvlR6IKAlE7V',
